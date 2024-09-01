@@ -42,6 +42,33 @@ def infix_to_Postfix (regex):
   
   return postfix
 
-regex = '(p ∨ r ∨ s) ∧ (q ∨ p ∨ s)'
 
-print(infix_to_Postfix(regex))
+def Parser(regex):
+  stack  = []
+  for i in regex:
+    if i.isalnum() and i != '∨':
+      stack.append(i)
+    elif i == '¬':
+      top = stack.pop()
+      stack.append(f'{i}{top}')
+    elif i == '∨':
+      top1 = stack.pop()
+      top2 = stack.pop()
+      if isinstance(top2, list):
+        top2.append(top1)
+        stack.append(top2)
+      else:
+        stack2 = [top2,top1]
+        stack.append(stack2)
+    elif i == '∧':
+      top1 = stack.pop()
+      top2 = stack.pop()
+      stack.append(top2)
+      stack.append(top1)
+  return stack
+
+
+regex = '(p ∨ q) ∧ (q ∨ s) ∧ (p ∨ s) ∧ (q ∨ s) '
+rt = infix_to_Postfix(regex)
+valor = Parser(rt)
+print(valor)
