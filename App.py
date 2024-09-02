@@ -1,6 +1,7 @@
 import streamlit as st
 from Parser import infix_to_Postfix, Parser, fuerzaBruta, parseToNumber, parseToString
 
+st.set_page_config(page_title="Evaluador lógico",page_icon="🧠")
 st.title('Evaluador de Expresiones Lógicas')
 
 expression = st.text_input('Ingresa la expresión lógica', '(p ∨ q) ∧ (q ∨ s) ∧ (p ∨ s) ∧ (q ∨ s)')
