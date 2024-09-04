@@ -1,6 +1,8 @@
 # Proyectos_Logica_Matematica
 
 ## Proyecto #2: Algoritmo DPLL
+## Descripción del Proyecto
+Este proyecto es una implementación de dos algoritmos fundamentales para resolver problemas de Satisfiabilidad Booleana (SAT): un **algoritmo de fuerza bruta** y el **algoritmo DPLL (Davis-Putnam-Logemann-Loveland)**. 
 
 ### Integrantes:
 
@@ -21,3 +23,6 @@
 
 ## Requerimientos:
 - `pip install -r requirements.txt`
+
+## Ejecutar:
+- `streamlit run src/App.py`
