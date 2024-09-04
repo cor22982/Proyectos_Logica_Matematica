@@ -136,13 +136,3 @@ def parseToNumber(list_numbers, list_expresion):
          list_numbers[i][j] = valor_String[list_expresion[i][j]]
          
          
-def Ejecute_Algoritm(regex, algoritm):
-   rt = infix_to_Postfix(regex)
-   valor = Parser(rt)
-   convert = convertTo_Ceros(valor)
-   parseToNumber(convert, valor)
-   if algoritm == 'Fuerza Bruta':
-      result, asignacion = fuerzaBruta(convert)
-   elif algoritm == 'DPL':
-      result, asignacion = fuerzaBruta(convert)
-   return result, asignacion

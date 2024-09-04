@@ -1,6 +1,6 @@
 import streamlit as st
-from Parser import Ejecute_Algoritm, parseToString
-
+from Parser import parseToString
+from Algoritm_set import Ejecute_Algoritm
 st.set_page_config(page_title="Evaluador lógico", page_icon="🧠")
 st.title('Evaluador de Expresiones Lógicas')
 
@@ -55,7 +55,10 @@ if st.button('Evaluar'):
         result, asignacion = Ejecute_Algoritm(expression, algoritmo)
         if result:
             st.success('La expresión es satisfacible 😃')
-            st.write('Asignación:', parseToString(asignacion))
+            if algoritmo == 'Fuerza Bruta':
+                st.write('Asignación:', parseToString(asignacion))
+            elif algoritmo == 'DPL':
+                st.write('Asignación:', asignacion)
         else:
             st.error('La expresión no es satisfacible 😞')
     else:
