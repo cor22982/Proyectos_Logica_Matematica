@@ -20,6 +20,4 @@
 | Comparación de Métodos                        | Evaluar la eficiencia entre fuerza bruta y DPLL   |
 
 ## Requerimientos:
-
-- `import streamlit as st`
 - `pip install -r requirements.txt`
