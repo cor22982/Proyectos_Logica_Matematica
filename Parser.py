@@ -12,9 +12,9 @@ Integrantes:
 from Stack import Stack
 
 def getPrecedence (c):
-    """
-    Retorna la precedencia del operador
-    """
+  """
+  Retorna la precedencia del operador
+  """
   precedencias = {
     '(': 1,
     '∨': 2,
@@ -25,9 +25,9 @@ def getPrecedence (c):
   return precedencias.get(c, 6)
 
 def deletespaces(regext):
-    """
-    Elimina los espacios en blanco de la expresión lógica
-    """
+  """
+  Elimina los espacios en blanco de la expresión lógica
+  """
   regex = ""
   for i in regext:
     if i != ' ':
@@ -35,9 +35,9 @@ def deletespaces(regext):
   return regex
 
 def infix_to_Postfix (regex):
-    """
-    Convierte la expresión de infix a postfix
-    """
+  """
+  Convierte la expresión de infix a postfix
+  """
   postfix = ""
   stack = Stack()
   regex = deletespaces(regex)
@@ -65,9 +65,9 @@ def infix_to_Postfix (regex):
 
 
 def Parser(regex):
-    """
-    Parsea la expresión postfija y organiza los operadores y operandos en una pila
-    """
+  """
+  Parsea la expresión postfija y organiza los operadores y operandos en una pila
+  """
   stack  = []
   for i in regex:
     if i.isalnum() and i != '∨':
