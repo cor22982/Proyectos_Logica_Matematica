@@ -25,4 +25,4 @@ Este proyecto es una implementación de dos algoritmos fundamentales para resolv
 - `pip install -r requirements.txt`
 
 ## Ejecutar:
-- `streamlit run src/App.py`
+- `streamlit run App.py`
