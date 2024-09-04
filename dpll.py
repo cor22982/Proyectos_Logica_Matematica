@@ -1,3 +1,15 @@
+
+"""
+Integrantes:
+• Gustavo Adolfo Cruz Bardales - 22779
+• Javier Andrés Chen González - 22153
+• Josué Emanuel Say Garcia - 22801
+• Pedro Pablo Guzmán Mayén - 22111
+• Mathew Alexander Cordero Aquino - 22982
+• Sebastián Estrada Tuch - 21405
+
+"""
+
 def selectLiteral(B):
     """
     Selecciona una literal para asignar en forma positiva.

@@ -1,5 +1,20 @@
+
+"""
+Integrantes:
+• Gustavo Adolfo Cruz Bardales - 22779
+• Javier Andrés Chen González - 22153
+• Josué Emanuel Say Garcia - 22801
+• Pedro Pablo Guzmán Mayén - 22111
+• Mathew Alexander Cordero Aquino - 22982
+• Sebastián Estrada Tuch - 21405
+
+"""
 from Stack import Stack
+
 def getPrecedence (c):
+    """
+    Retorna la precedencia del operador
+    """
   precedencias = {
     '(': 1,
     '∨': 2,
@@ -10,6 +25,9 @@ def getPrecedence (c):
   return precedencias.get(c, 6)
 
 def deletespaces(regext):
+    """
+    Elimina los espacios en blanco de la expresión lógica
+    """
   regex = ""
   for i in regext:
     if i != ' ':
@@ -17,6 +35,9 @@ def deletespaces(regext):
   return regex
 
 def infix_to_Postfix (regex):
+    """
+    Convierte la expresión de infix a postfix
+    """
   postfix = ""
   stack = Stack()
   regex = deletespaces(regex)
@@ -44,6 +65,9 @@ def infix_to_Postfix (regex):
 
 
 def Parser(regex):
+    """
+    Parsea la expresión postfija y organiza los operadores y operandos en una pila
+    """
   stack  = []
   for i in regex:
     if i.isalnum() and i != '∨':
@@ -76,6 +100,10 @@ def Parser(regex):
   return stack
 
 def fuerzaBruta(expresion):
+    """
+    Evalúa una expresión lógica utilizando el algoritmo de fuerza bruta.
+    Prueba todas las posibles asignaciones de valores de verdad a las variables.
+    """
     variables = [1, 2, 3, 4]  
 
     for i in range(2 ** len(variables)):
@@ -114,6 +142,9 @@ valor_String = {
 }
 
 def convertTo_Ceros(valor):
+    """
+    Convierte una lista de expresiones en una lista de ceros inicialización de matriz.
+    """
     lista = []
     for i in range(len(valor)):
         fila = []

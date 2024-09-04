@@ -1,6 +1,19 @@
+
+"""
+Integrantes:
+• Gustavo Adolfo Cruz Bardales - 22779
+• Javier Andrés Chen González - 22153
+• Josué Emanuel Say Garcia - 22801
+• Pedro Pablo Guzmán Mayén - 22111
+• Mathew Alexander Cordero Aquino - 22982
+• Sebastián Estrada Tuch - 21405
+
+"""
+
 import streamlit as st
 from Parser import parseToString
 from Algoritm_set import Ejecute_Algoritm
+# Configura la página de la aplicación con un título y un ícono
 st.set_page_config(page_title="Evaluador lógico", page_icon="🧠")
 st.title('Evaluador de Expresiones Lógicas')
 
