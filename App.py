@@ -1,32 +1,58 @@
 import streamlit as st
-from Parser import infix_to_Postfix, Parser, fuerzaBruta, parseToNumber, parseToString
+from Parser import Ejecute_Algoritm, parseToString
 
-# Configuración de la página
 st.set_page_config(page_title="Evaluador lógico", page_icon="🧠")
 st.title('Evaluador de Expresiones Lógicas')
 
+
+if 'expression_input' not in st.session_state:
+    st.session_state.expression_input = ''
+
+
 operators = {'∨': ' ∨ ', '∧': ' ∧ ', '¬': '¬'}
+
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
     if st.button('∨'):
-        st.session_state.expression += operators['∨']
+        st.session_state.expression_input += operators['∨']
 with col2:
     if st.button('∧'):
-        st.session_state.expression += operators['∧']
+        st.session_state.expression_input += operators['∧']
 with col3:
     if st.button('¬'):
-        st.session_state.expression += operators['¬']
+        st.session_state.expression_input += operators['¬']
 
-expression = st.text_input('Ingresa la expresión lógica', '(p ∨ q) ∧ (q ∨ s)', key='expression')
+
+predefined_expressions = [
+    'p ∧ ¬p', 
+    'q ∨ p ∨ ¬p', 
+    '(¬p ∨ ¬r ∨ ¬s) ∧ (¬q ∨ ¬p ∨ ¬s)', 
+    '(¬p ∨ ¬q) ∧ (q ∨ ¬s) ∧ (¬p ∨ s) ∧ (¬q ∨ s)',
+    '(¬p ∨ ¬q ∨ ¬r) ∧ (q ∨ ¬r ∨ p) ∧ (¬p ∨ q ∨ r)',
+    'r ∧ (¬q ∨ ¬r) ∧ (¬p ∨ q ∨ ¬r) ∧ q'
+]
+
+
+col1, col2 = st.columns([3,2])
+with col1:
+    selected_expression = st.selectbox('Usar una expresión del documento', [''] + predefined_expressions)
+with col2:
+    expression_input = st.text_input('Ingresa la expresión manualmente', st.session_state.expression_input)
+
+
+st.session_state.expression_input = expression_input
+
+
+expression = expression_input if expression_input else selected_expression
+
+
+algoritmo = st.selectbox('Selecciona el Algoritmo', ['Fuerza Bruta', 'DPL'])
+
 
 if st.button('Evaluar'):
     if expression:
-        postfix_expr = infix_to_Postfix(expression)
-        parsed_expr = Parser(postfix_expr)
-
-        result, asignacion = fuerzaBruta(parseToNumber(parsed_expr))
-
+        result, asignacion = Ejecute_Algoritm(expression, algoritmo)
         if result:
             st.success('La expresión es satisfacible 😃')
             st.write('Asignación:', parseToString(asignacion))
@@ -35,7 +61,7 @@ if st.button('Evaluar'):
     else:
         st.warning('Por favor ingresa una expresión lógica válida.')
 
-# Visualización adicional con emojis
+
 if 'result' in locals():
     if result:
         st.markdown("### ¡La expresión es **satisfacible**!")
@@ -43,4 +69,3 @@ if 'result' in locals():
     else:
         st.markdown("### La expresión **no** es satisfacible.")
         st.image("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.tenor.com%2Fimages%2Ffc1d577e8b42f847e1ef1615b76a9483%2Ftenor.gif&f=1&nofb=1&ipt=46395077f203095ad2f2bb4fd4e8d16027782772c5832057cba83ad55ee6155e&ipo=images", width=200)
-

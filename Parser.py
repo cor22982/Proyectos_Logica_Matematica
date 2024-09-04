@@ -63,8 +63,16 @@ def Parser(regex):
     elif i == '∧':
       top1 = stack.pop()
       top2 = stack.pop()
-      stack.append(top2)
-      stack.append(top1)
+      if isinstance(top1, list):
+         stack3 = top1
+      else:
+        stack3 = [top1]   
+      if isinstance(top2, list):
+         stack2 = top2
+      else:
+         stack2 = [top2]
+      stack.append(stack2)
+      stack.append(stack3)
   return stack
 
 def fuerzaBruta(expresion):
@@ -93,18 +101,26 @@ def fuerzaBruta(expresion):
             return True, asignacion
     return False, None
 
-def parseToNumber(valor):
-  for i in range(len(valor)):
-    for j in range(len(valor[i])):
-      if valor[i][j] == 'p':
-        valor[i][j] = 1
-      elif valor[i][j] == 'q':
-        valor[i][j] = 2
-      elif valor[i][j] == 'r':
-        valor[i][j] = 3
-      elif valor[i][j] == 's':
-        valor[i][j] = 4
-  return valor
+
+valor_String = {
+   'p': 1,
+   'q': 2,
+   'r': 3,
+   's': 4,
+   '¬p': -1,
+   '¬q': -2,
+   '¬r': -3,
+   '¬s': -4,
+}
+
+def convertTo_Ceros(valor):
+    lista = []
+    for i in range(len(valor)):
+        fila = []
+        for j in range(len(valor[i])):
+            fila.append(0)
+        lista.append(fila)
+    return lista
 
 def parseToString(valor):
   return {
@@ -114,16 +130,19 @@ def parseToString(valor):
     's': valor.get(4)
   }
 
-
-regex = '(p ∨ q) ∧ (q ∨ s) ∧ (p ∨ s) ∧ (q ∨ s) '
-rt = infix_to_Postfix(regex)
-valor = Parser(rt)
-print(valor)
-
-result, asignacion = fuerzaBruta(parseToNumber(valor))
-
-if result:
-    print("La expresión es satisfacible")
-    print(parseToString(asignacion))
-else:
-    print("La expresión no es satisfacible")
+def parseToNumber(list_numbers, list_expresion):
+   for i in range (len(list_expresion)):
+      for j in range (len(list_expresion[i])):
+         list_numbers[i][j] = valor_String[list_expresion[i][j]]
+         
+         
+def Ejecute_Algoritm(regex, algoritm):
+   rt = infix_to_Postfix(regex)
+   valor = Parser(rt)
+   convert = convertTo_Ceros(valor)
+   parseToNumber(convert, valor)
+   if algoritm == 'Fuerza Bruta':
+      result, asignacion = fuerzaBruta(convert)
+   elif algoritm == 'DPL':
+      result, asignacion = fuerzaBruta(convert)
+   return result, asignacion
