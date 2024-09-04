@@ -3,7 +3,7 @@ def selectLiteral(B):
     Selecciona una literal para asignar en forma positiva.
     
     Parámetros:
-    B (list of sets): El conjunto de cláusulas.
+    B (list of list): El conjunto de cláusulas.
 
     Retorna:
     str: Una literal seleccionada.
@@ -17,7 +17,7 @@ def simplify(B, L):
     Simplifica el conjunto de cláusulas dado una literal L.
     
     Parámetros:
-    B (list of sets): El conjunto de cláusulas.
+    B (list of list): El conjunto de cláusulas.
     L (str): La literal a utilizar para simplificar el conjunto de cláusulas.
 
     Retorna:
@@ -31,7 +31,7 @@ def simplify(B, L):
         L_neg = '¬' + L if not L.startswith('¬') else L[1:]
         if L_neg in clause:
             # Elimina todas las ocurrencias de la literal complementaria de L
-            new_clause = {lit for lit in clause if lit != L_neg}
+            new_clause = [lit for lit in clause if lit != L_neg]
             if not new_clause:
                 # Si la cláusula queda vacía, la fórmula es insatisfacible
                 return None  # Indica insatisfacción con None para señalar cláusula vacía
@@ -45,7 +45,7 @@ def dpll(B, I):
     Algoritmo DPLL para determinar la satisfacibilidad de una fórmula booleana en forma de cláusulas.
 
     Parámetros:
-    B (list of sets): Un conjunto de cláusulas (cada cláusula es un conjunto de literales) en forma de CNF.
+    B (list of list): Un conjunto de cláusulas (cada cláusula es una lista de literales) en forma de CNF.
     I (dict): Una asignación parcial de valores a variables.
 
     Retorna:
@@ -85,7 +85,7 @@ def printResult(B, I):
     Imprime el resultado del algoritmo DPLL para un conjunto de cláusulas y una asignación inicial.
     
     Parámetros:
-    B (list of sets): Un conjunto de cláusulas (cada cláusula es un conjunto de literales) en forma de CNF.
+    B (list of list): Un conjunto de cláusulas (cada cláusula es una lista de literales) en forma de CNF.
     I (dict): Una asignación inicial parcial de valores a variables.
     """
     resultado, asignacion = dpll(B, I)
@@ -98,7 +98,7 @@ def printResult(B, I):
         print("La fórmula es insatisfacible.")
 
 # Ejemplo de uso
-clausulas = [{'p','¬p'}]  # Conjunto de cláusulas con letras
+clausulas = [['¬p', '¬q', '¬s'], ['¬q', '¬p', '¬s']]  # Conjunto de cláusulas con letras usando listas
 asignacion_inicial = {}  # Asignación inicial vacía
 
 printResult(clausulas, asignacion_inicial)
