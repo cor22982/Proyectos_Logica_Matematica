@@ -1,4 +1,3 @@
-
 """
 Integrantes:
 • Gustavo Adolfo Cruz Bardales - 22779
@@ -104,12 +103,13 @@ def fuerzaBruta(expresion):
     Evalúa una expresión lógica utilizando el algoritmo de fuerza bruta.
     Prueba todas las posibles asignaciones de valores de verdad a las variables.
     """
-    variables = [1, 2, 3, 4]  
-
+    variables = set(abs(literal) for clausula in expresion for literal in clausula)
+    variables = list(variables)  
+    
     for i in range(2 ** len(variables)):
         asignacion = {}
         for j, var in enumerate(variables):
-            asignacion[var] = (i & (1 << j)) != 0
+            asignacion[var] = (i & (1 << j)) != 0 
 
         satisfacible = True
         for clausula in expresion:
@@ -154,16 +154,20 @@ def convertTo_Ceros(valor):
     return lista
 
 def parseToString(valor):
-  return {
-    'p': valor.get(1), 
-    'q': valor.get(2), 
-    'r': valor.get(3), 
-    's': valor.get(4)
-  }
+    valorFinal = {}
+    
+    for numero, val in valor.items():
+        letra = chr(ord('p') + numero - 1)
+        #if val != None:
+        valorFinal[letra] = val
+        #else:
+        #  valorFinal[letra] = True
+    
+    return valorFinal
+
 
 def parseToNumber(list_numbers, list_expresion):
    for i in range (len(list_expresion)):
       for j in range (len(list_expresion[i])):
          list_numbers[i][j] = valor_String[list_expresion[i][j]]
-         
          
