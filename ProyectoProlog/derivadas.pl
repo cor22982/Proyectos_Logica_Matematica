@@ -9,6 +9,18 @@ funcion_inversa_trigonometrica(arctan).
 funcion_exponencial(exp).
 funcion_logaritmica(ln).
 
+% Derivada de un producto cuando A es un número y B es una variable
+derivada(A*B, Y) :-
+    number(A),
+    derivada(B, Bprima),
+    Y = A * Bprima.
+
+% Derivada de un producto cuando B es un número y A es una variable
+derivada(A*B, Y) :-
+    number(B),
+    derivada(A, Aprima),
+    Y = B * Aprima.
+
 % Derivada de un producto - Regla del producto
 derivada(A*B, Y) :-
     derivada(A, Aprima),
@@ -49,7 +61,7 @@ derivada(tan(X), Y) :-
 % Derivada ArcoTangente
 derivada(arctan(X), Y) :-
     derivada(X, Y1),
-    Y = (1 / (1 + X^2)) * Y1.
+    Y = Y1 / (1 + X^2).
 
 % Derivada Exponencial
 derivada(exp(X), Y) :-
@@ -84,8 +96,8 @@ derivada(X^E, Y) :-
     ).
 
 % Derivada de X^1 (caso especial)
-derivada(X^1, 1).
-derivada(X, 1).
+derivada(x^1, 1).
+derivada(x, 1).
 
 % Derivada de una constante (número)
 derivada(C, 0) :- number(C).
