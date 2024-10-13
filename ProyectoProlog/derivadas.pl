@@ -1,34 +1,31 @@
-% hecho para poder utilizar el simbolo x
+% Hecho para poder utilizar el símbolo x
 x.
 
-% Regla para derivar potencias
-derivada(X^E, Y) :-
-    E \= 0,  % E que no sea cero
-    Y = Coef * X^E1,  % Definir la derivada
-    Coef is E,  % El coeficiente es el exponente E
-    E1 is E - 1.  % Reducir el exponente en 1
 
-% Regla para manejar la derivada de una constante (E = 0)
-derivada(X^0, 0).
-
-% Regla para derivar un polinomio (suma de términos)
-derivada(T1 + T2, Y) :-   % Y es la derivada de T1 + T2
-    derivada(T1, Y1),     % Derivada del primer término
-    derivada(T2, Y2),     % Derivada del segundo término
-    Y = Y1 + Y2.          % Sumar las derivadas
-
-% Regla para derivar un polinomio con multiples terminos
+% Regla general para derivar un polinomio con múltiples términos
 derivada(Terminos, Y) :- 
-    Terminos =.. [ + | T], % Separar los términos por suma
-    maplist(derivada, T, Y1), % Derivar cada término
-    Y =.. [ + | Y1]. % Reunir las derivadas de nuevo en una suma
+    Terminos =.. [Op | T],  % Separar los términos por el operador (+ o -)
+    ( Op = (+) ; Op = (-) ),  % Asegurarse de que el operador sea válido (suma o resta)
+    maplist(derivada, T, Y1),  % Derivar cada término
+    Y =.. [Op | Y1].  % Reunir las derivadas con el mismo operador
 
-% Regla para manejar exponentes negativos
-derivada(X^-E, Y) :-  % E es positivo
-    E > 0,  % Asegurar que E sea positivo
-    Y = -Coef * X^(-E1),  % Definir la derivada
-    Coef is E,  % El coeficiente es el exponente E
-    E1 is E + 1.  % Aumentar el exponente en 1
+% Derivadas de polinomios con exponente positivos, negativos, cero
+derivada(X^E, Y) :-
+    ( E > 0 ->  % Caso de exponentes positivos
+        Coef is E,
+        E1 is E - 1,
+        Y = (Coef * (X^E1))  % Derivada de X^E
+    ; E < 0 ->  % Caso de exponentes negativos
+        PosE is -E,
+        E1 is PosE + 1,
+        Coef is PosE,
+        Y = -(Coef * (X^(-E1)))  % Derivada de X^(-E)
+    ; E = 0 ->  % Derivada de constante
+        Y = 0
+    ).
 
-% Regla para derivar términos constantes
-derivada(C, 0) :- number(C).  % C es una constante
+% Derivada de X^1 (caso especial)
+derivada(X^1, 1).
+
+% Derivada de una constante (número)
+derivada(C, 0) :- number(C).
