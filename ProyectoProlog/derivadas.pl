@@ -1,3 +1,12 @@
+/* 
+===================
+    REFERENCIAS
+===================
+Hacer condiciones en una regla para multiples casos de exponente en derivación de polinomios: https://jnjsite.com/prolog-como-hacer-condicionales/
+Funciones de prolog para verificación de numeros: https://www.cs.us.es/~jalonso/cursos/slc-15/temas/tema-2.html
+Disyunciones y pertenencia: https://www.cs.us.es/~jalonso/cursos/slc-15/temas/tema-2.html#construcci%C3%B3n-de-listas
+*/
+
 % Hecho para poder utilizar el símbolo x y funciones
 x.
 funcion_trigonometrica(sin).
