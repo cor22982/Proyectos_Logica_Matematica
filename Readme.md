@@ -12,23 +12,35 @@ El objetivo de la actividad es reflexionar y aplicar la librería scikit-fuzzy e
 | Mathew Cordero    | Pedro Guzmán      |
 | Gustavo Cruz      | Josué Say         |
 
+## Problema:
+Un avión está sujeto a turbulencias, las que causan que el avión baje o suba bruscamente formando un ángulo respecto de su línea de vuelo. Se quiere diseñar un sistema de control difuso para que un piloto automático responda al problema de turbulencia ajustando la posición del timón de la aeronave.
 
 ## Requerimientos:
 - `pip install -r requirements.txt`
-- `Tener una carpeta llamada "images" junto al codigo para guardar los resultados`
 
 ## Ejecutar:
 python main.py
 
 ## Resultados:
-#### Temperatura
-![Temperature View](Proyecto4/images/temperature_view.png)
+#### Velocidad
+![Velocidad](Proyecto4/images/gráfico_velocidad.png)
 
-#### Humedad
-![Humidity View](Proyecto4/images/humidity_view.png)
+#### Ángulo
+![Ángulo](Proyecto4/images/gráfico_ángulo.png)
 
-#### Velocidad del Ventilador
-![Fan Speed View](Proyecto4/images/fan_speed_view.png)
+#### Posición
+![Posición](Proyecto4/images/gráfico_posición.png)
 
 ### Resultado de la Simulación
-![Fan Speed Simulation](Proyecto4/images/fan_speed_simulation.png)
+Entrada:
+- `La velocidad es de 515 Kmph`
+- `El ángulo es de -2.5 grados` 
+
+![Simulation](Proyecto4/images/resultados.png)
+
+## Conclusiones del proyecto:
+- La lógica difusa proporciona una herramienta eficaz para sistemas de control en condiciones de incertidumbre y variabilidad.
+- Permite obtener soluciones rápidas y simples para problemas complejos, facilitando tanto el proceso de programación como el de determinismo.
+- Aunque no es determinista, ofrece resultados dentro de un margen razonable, representando la realidad de manera aproximada.
+- La biblioteca `skfuzzy` de Python permite implementar lógica difusa de forma sencilla, incluyendo visualizaciones que facilitan el uso y comprensión.
+
