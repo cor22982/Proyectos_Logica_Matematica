@@ -1,66 +1,83 @@
+
+# Proyecto 4 Logica Fuzzy
+
 import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
-import matplotlib.pyplot as plt
+
+"""Ahora vamos a establecer nuestra variables de entrada y salida."""
 
 # Nuevas variables difusas
-temperature = ctrl.Antecedent(np.arange(0, 41, 1), 'temperature')
-humidity = ctrl.Antecedent(np.arange(0, 101, 1), 'humidity')
-fan_speed = ctrl.Consequent(np.arange(0, 101, 1), 'fan_speed')
+velocidad = ctrl.Antecedent(np.arange(0, 1000, 1), 'velocidad')
+angulo = ctrl.Antecedent(np.arange(-10, 10, 1), 'angulo')
+posicion = ctrl.Consequent(np.arange(0, 10, 1), 'posicion')
 
-# Funciones de membresía de temperatura
-temperature['cold'] = fuzz.trapmf(temperature.universe, [0, 0, 15, 20])
-temperature['warm'] = fuzz.trimf(temperature.universe, [15, 25, 35])
-temperature['hot'] = fuzz.trapmf(temperature.universe, [30, 35, 40, 40])
+# Funciones de membresía de velocidad
+velocidad['bajo'] = fuzz.trapmf(velocidad.universe, [0, 0, 450, 500])
+velocidad['ok'] = fuzz.trimf(velocidad.universe, [450, 550, 700])
+velocidad['alto'] = fuzz.trapmf(velocidad.universe, [550, 850, 1000, 1000])
 
-# Funciones de membresía de humedad
-humidity['low'] = fuzz.trapmf(humidity.universe, [0, 0, 30, 40])
-humidity['medium'] = fuzz.trimf(humidity.universe, [30, 50, 70])
-humidity['high'] = fuzz.trapmf(humidity.universe, [60, 70, 100, 100])
+# Funciones de membresía de angulo
+angulo['bajo'] = fuzz.trapmf(angulo.universe, [-10, -10, -5, 0])
+angulo['leve'] = fuzz.trimf(angulo.universe, [-5, 0, 5])
+angulo['alto'] = fuzz.trapmf(angulo.universe, [0, 5, 10, 10])
 
-# Funciones de membresía de velocidad del ventilador
-fan_speed['off'] = fuzz.trapmf(fan_speed.universe, [0, 0, 20, 30])
-fan_speed['low'] = fuzz.trimf(fan_speed.universe, [20, 40, 60])
-fan_speed['medium'] = fuzz.trimf(fan_speed.universe, [40, 60, 80])
-fan_speed['high'] = fuzz.trapmf(fan_speed.universe, [70, 90, 100, 100])
+# Funciones de membresía de posicion
+posicion['bajo'] = fuzz.trapmf(posicion.universe, [0, 0, 0, 4])
+posicion['bm'] = fuzz.trimf(posicion.universe, [2, 4, 6])
+posicion['media'] = fuzz.trimf(posicion.universe, [4, 6, 8])
+posicion['am'] = fuzz.trimf(posicion.universe, [6, 8, 10])
+posicion['alto'] = fuzz.trapmf(posicion.universe, [8, 10, 10, 10])
 
-# Visualización y guardado de imágenes
-def save_view(variable, filename):
-    plt.figure()
-    variable.view()
-    plt.savefig(f'images/{filename}.png')
-    plt.close()
+"""Mostramos los graficos"""
 
-save_view(temperature, 'temperature_view')
-save_view(humidity, 'humidity_view')
-save_view(fan_speed, 'fan_speed_view')
+angulo.view()
+
+velocidad.view()
+
+posicion.view()
 
 # Reglas
-rule1 = ctrl.Rule(temperature['cold'] & humidity['low'], fan_speed['off'])
-rule2 = ctrl.Rule(temperature['cold'] & humidity['medium'], fan_speed['low'])
-rule3 = ctrl.Rule(temperature['cold'] & humidity['high'], fan_speed['low'])
-rule4 = ctrl.Rule(temperature['warm'] & humidity['low'], fan_speed['low'])
-rule5 = ctrl.Rule(temperature['warm'] & humidity['medium'], fan_speed['medium'])
-rule6 = ctrl.Rule(temperature['warm'] & humidity['high'], fan_speed['high'])
-rule7 = ctrl.Rule(temperature['hot'] & humidity['low'], fan_speed['high'])
-rule8 = ctrl.Rule(temperature['hot'] & humidity['medium'], fan_speed['high'])
-rule9 = ctrl.Rule(temperature['hot'] & humidity['high'], fan_speed['high'])
+
+# Si la velocidad es alta y el angulo es alto entonces la posicion es bm
+rule1 = ctrl.Rule(velocidad['alto'] & angulo['alto'], posicion['bm'])
+
+# Si la velocidad es alta y el angulo leve etnocnes la posicioon es bm
+rule2 = ctrl.Rule(velocidad['alto'] & angulo['leve'], posicion['bm'])
+
+# Si la velocidad es alta, y el angulo bajo entonces la posicion es baja
+rule3 = ctrl.Rule(velocidad['alto'] & angulo['bajo'], posicion['bajo'])
+
+
+# Si la velocidad es ok y el angulo alto entonces la posicion es alta media
+rule4 = ctrl.Rule(velocidad['ok'] & angulo['alto'], posicion['am'])
+
+# Si la velocidad es ok y el angulo es leve entonces la posicion es media
+rule5 = ctrl.Rule(velocidad['ok'] & angulo['leve'], posicion['media'])
+
+# Si la velocidad es ok y el angulo es bajo entonces la posicion es baja media
+rule6 = ctrl.Rule(velocidad['ok'] & angulo['bajo'], posicion['bm'])
+
+
+# Si la velocidad es baja y el angulo alto entonces la posicion sera alta
+rule7 = ctrl.Rule(velocidad['bajo'] & angulo['alto'], posicion['alto'])
+
+# Si la velocidad es baja y el angulo leve entonces la posicion sera alta media
+rule8 = ctrl.Rule(velocidad['bajo'] & angulo['leve'], posicion['am'])
+
+# Si la velocidad es baja y el angulo bajo entonces la posicion sera alta media
+rule9 = ctrl.Rule(velocidad['bajo'] & angulo['bajo'], posicion['am'])
 
 # Sistema de control
-fan_control = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9])
-fan_simulation = ctrl.ControlSystemSimulation(fan_control)
+pos_control = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9])
+pos_simulation = ctrl.ControlSystemSimulation(pos_control)
 
 # Entradas
-fan_simulation.input['temperature'] = 25
-fan_simulation.input['humidity'] = 65
+pos_simulation.input['velocidad'] = 515
+pos_simulation.input['angulo'] = -2.5
 
 # Computa la salida
-fan_simulation.compute()
+pos_simulation.compute()
 
-print(f"Velocidad del ventilador: {fan_simulation.output['fan_speed']}")
-
-# Guardar visualización de la simulación de la salida
-plt.figure()
-fan_speed.view(sim=fan_simulation)
-plt.savefig('images/fan_speed_simulation.png')
-plt.close()
+print(f"Posicion del timon: {pos_simulation.output['posicion']}")
+posicion.view(sim=pos_simulation)
