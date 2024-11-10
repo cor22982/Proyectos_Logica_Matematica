@@ -1,6 +1,6 @@
 import os
 from graphviz import Digraph
-
+from reader import Reader
 class TM:
     """
     Clase para simular una Máquina de Turing determinista.
@@ -28,17 +28,17 @@ class TM:
         }
     """
 
-    def __init__(self, estados, alfabetoEntrada, alfabetoCinta, q0, aceptacion, rechazo, transiciones):
-        self.estados = estados
-        self.alfabetoEntrada = alfabetoEntrada
-        self.alfabetoCinta = alfabetoCinta
-        self.q0 = q0
-        self.aceptacion = aceptacion
-        self.rechazo = rechazo
-        self.transiciones = transiciones
+    def __init__(self,  lector):
+        self.estados = lector.estados
+        self.alfabetoEntrada = lector.alfabetoEntrada
+        self.alfabetoCinta = lector.tape_alphabet
+        self.q0 = lector.q0
+        self.aceptacion = lector.aceptacion
+        self.rechazo = lector.rechazo
+        self.transiciones = lector.transiciones
         self.size_cinta = 8
         self.cinta = []
-        self.posCabezal = 0
+        self.posCabezal = lector.posCabezal
         self.historial = []
 
     def isValidString(self, cadena):
@@ -200,10 +200,12 @@ transiciones = {
     }
 }
 
-maquina = TM(estados, alfabetoEntrada, alfabetoCinta, q0, aceptacion, rechazo, transiciones)
+
+read = Reader('Proyecto4\\files\\turing_machine.yaml')
+maquina = TM(lector=read)
 
 # Ejecutar la simulación
-result, historial = maquina.simulate("01") #11 rechazo, 01 aceptado, 00 bucle (con 00, si se borra transiciones de q1 -> bucle, si se borra trasicion de q1 leyendo 0 -> bucle)
+result, historial = maquina.simulate(read.cadena) #11 rechazo, 01 aceptado, 00 bucle (con 00, si se borra transiciones de q1 -> bucle, si se borra trasicion de q1 leyendo 0 -> bucle)
 print(f"El resultado es \"{result}\".\nLos pasos de la MT son:")
 
 # Imprimir el historial de pasos

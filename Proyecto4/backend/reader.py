@@ -27,7 +27,7 @@ class Reader(object):
       self.aceptacion = tm_machine['q_states']['final']
       self.rechazo = tm_machine['q_states']['reject']
       self.posCabezal = tm_machine['posHead']
-      self.cinta = [char for char in tm_machine['simulation_strings'][0]]
+      self.cadena = tm_machine['simulation_strings'][0]
     
     def get_create_Transitions(self):
       with open(self.filename, 'r') as file:
@@ -44,7 +44,3 @@ class Reader(object):
                                             l['output']['tape_output'],
                                             l['output']['tape_displacement']]
       self.transiciones = transiciones
-
-
-lector = Reader(filename='Proyecto4\\files\\turing_machine.yaml')
-print(lector)
