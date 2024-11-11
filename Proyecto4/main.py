@@ -27,13 +27,23 @@ with st.container():
             else:
                 st.warning(re)
             pasos = ''
+            pasos_show = ''
             for p in historial:
                 pasos += f'{p}<br>'
+                pasos_show += f'{p}\n'
             st.subheader('Configuraciones de la cinta')
             st.write(f"<span style='font-size:20px; font-style:italic;'>{pasos}</span>", unsafe_allow_html=True)
             st.subheader('Digrama de la Maquina de Turing')
             maquina.graph()
             st.image('../graphs/maquina_turing.png')
-            
+
+            txt_content = f"CONFIGURACIONES MAQUINA DE TURING\nCadena: {lector.cadena}\nConfiguraciones:\n" + pasos_show
+            st.download_button(
+                label="Descargar archivo de configuraciones",
+                data=txt_content,
+                file_name="configuraciones_TM.txt",  # Nombre del archivo .txt
+                mime="text/plain"  # MIME para archivos de texto
+            )
+        
         except yaml.YAMLError as e:
             st.error(f"Error al leer el archivo YAML: {e}")
