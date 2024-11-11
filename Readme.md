@@ -1,6 +1,8 @@
-# Proyectos_Logica_Matematica
+# Parcial 4
 
-## Parcial #4
+## Video Funcionamiento
+[Video](https://youtu.be/c6uQ7Pl2BeU)
+
 ## Objetivos del Proyecto
 El objetivo del parcial es evaluar los conceptos aprendidos en clase respecto a máquinas de Turing y reflexionar de forma colaborativa respecto a los avatares mostrados en clase.
 La presentación se realizará en los períodos de clase el día asignado en forma presencial.
