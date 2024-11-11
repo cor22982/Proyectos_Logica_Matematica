@@ -33,6 +33,6 @@ cd Proyecto4
 ```
 - Ejecuta el comando para ejecutar el codigo
 ```  
-python main.py
+streamlit run main.py
 ```
 
