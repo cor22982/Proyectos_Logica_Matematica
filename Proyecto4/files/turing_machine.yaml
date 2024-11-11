@@ -64,5 +64,5 @@ delta:
     tape_output: 'B'
     tape_displacement: 'R'
 simulation_strings:
-- '00'
+- '01'
 posHead: 0

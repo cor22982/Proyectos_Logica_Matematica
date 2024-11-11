@@ -201,23 +201,23 @@ transiciones = {
 }
 
 
-read = Reader('Proyecto4\\files\\turing_machine.yaml')
-maquina = TM(lector=read)
+# read = Reader('Proyecto4\\files\\turing_machine.yaml')
+# maquina = TM(lector=read)
 
-# Ejecutar la simulación
-result, historial = maquina.simulate(read.cadena) #11 rechazo, 01 aceptado, 00 bucle (con 00, si se borra transiciones de q1 -> bucle, si se borra trasicion de q1 leyendo 0 -> bucle)
-print(f"El resultado es \"{result}\".\nLos pasos de la MT son:")
+# # Ejecutar la simulación
+# result, historial = maquina.simulate(read.cadena) #11 rechazo, 01 aceptado, 00 bucle (con 00, si se borra transiciones de q1 -> bucle, si se borra trasicion de q1 leyendo 0 -> bucle)
+# print(f"El resultado es \"{result}\".\nLos pasos de la MT son:")
 
-# Imprimir el historial de pasos
-for paso in historial:
-    print(paso)
+# # Imprimir el historial de pasos
+# for paso in historial:
+#     print(paso)
 
 
-# # Llamar al método para imprimir la tabla de transiciones
-# maquina.imprimir_tabla_transiciones()
+# # # Llamar al método para imprimir la tabla de transiciones
+# # maquina.imprimir_tabla_transiciones()
 
-# Llamar al método para generar el grafo
-maquina.graph()
+# # Llamar al método para generar el grafo
+# maquina.graph()
 
-# # Guardar el historial de pasos
+# # # Guardar el historial de pasos
 # maquina.writeInTXT()

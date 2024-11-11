@@ -1,8 +1,6 @@
-import yaml
-
 class Reader(object):
-    def __init__(self, filename):
-      self.filename = filename
+    def __init__(self, content):
+      self.tm_machine = content
       self.estados = []
       self.alfabeto = []
       self.alfabetoEntrada = []
@@ -17,23 +15,19 @@ class Reader(object):
       self.get_create_Transitions()
     
     def get_states_and_alphabets(self):
-      with open(self.filename, 'r') as file:
-        tm_machine = yaml.safe_load(file)
-      self.estados = tm_machine['q_states']['q_list']
-      self.alfabeto = tm_machine['alphabet']
+      self.estados = self.tm_machine['q_states']['q_list']
+      self.alfabeto = self.tm_machine['alphabet']
       self.alfabetoEntrada = self.alfabeto
-      self.tape_alphabet = tm_machine['tape_alphabet'] + self.alfabeto
-      self.q0 = tm_machine['q_states']['initial']
-      self.aceptacion = tm_machine['q_states']['final']
-      self.rechazo = tm_machine['q_states']['reject']
-      self.posCabezal = tm_machine['posHead']
-      self.cadena = tm_machine['simulation_strings'][0]
+      self.tape_alphabet = self.tm_machine['tape_alphabet'] + self.alfabeto
+      self.q0 = self.tm_machine['q_states']['initial']
+      self.aceptacion = self.tm_machine['q_states']['final']
+      self.rechazo = self.tm_machine['q_states']['reject']
+      self.posCabezal = self.tm_machine['posHead']
+      self.cadena = self.tm_machine['simulation_strings'][0]
     
     def get_create_Transitions(self):
-      with open(self.filename, 'r') as file:
-         tm_machine = yaml.safe_load(file)
       transiciones = {}
-      lista_params = tm_machine['delta']
+      lista_params = self.tm_machine['delta']
       valor = ''
       for l in lista_params:
         if valor != l['params']['initial_state']:
